@@ -2,7 +2,7 @@
 
 RayTracer is a repository used to teaching C++ to myself. Thus critique and tips are very welcome.
 
-## Installation
+## Build
 
 ```bash
 sudo apt install libeigen3-dev
