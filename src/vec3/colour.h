@@ -11,7 +11,9 @@
 namespace Colour {
     using Colour = Eigen::Vector3d;
 
-    void Write(std::ostream &out, const Colour &pixel_colour);
+    void Write(std::ostream &out,
+               const Colour &pixel_colour,
+               const unsigned int &samples_per_pixel);
 }
 
 

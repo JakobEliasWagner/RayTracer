@@ -8,6 +8,8 @@
 #include <vector>
 #include <Eigen/Dense>
 
+#include "colour.h"
+
 using Point3 = Eigen::Vector3d;
 using Vec3 = Eigen::Vector3d;
 

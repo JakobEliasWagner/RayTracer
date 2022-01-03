@@ -18,7 +18,7 @@ bool SimObjectList::Hit(const Ray &ray,
                         HitRecord &record) const {
     bool hit_anything = false;
     HitRecord tmp_record;
-    auto closest = t_max;
+    auto closest{t_max};
 
     for (const auto &obj: sim_objects_) {
         if (obj->Hit(ray, t_min, closest, tmp_record)) {

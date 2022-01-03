@@ -6,7 +6,7 @@
 #define RAYTRACER_SIM_OBJECT_H
 
 #include "../vec3/vec3.h"
-#include "../ray/ray.h"
+#include "../camera/ray.h"
 
 struct HitRecord {
     Point3 point;
