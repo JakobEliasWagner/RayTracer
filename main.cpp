@@ -9,10 +9,14 @@
 #include "src/utility/utility.h"
 
 
-Colour::Colour ray_color(const Ray &ray, const SimObject &world) {
+Colour::Colour ray_colour(const Ray &ray, const SimObject &world, const unsigned int &bounces) {
+    if (bounces <= 0) return Colour::Colour(0., 0., 0.);
+
     HitRecord record;
     if (world.Hit(ray, 0, Constants::infinity, record)) {
-        return 0.5 * (record.normal + Colour::Colour(1., 1., 1.));
+        Point3 target{record.point + record.normal + RandomVec3InSphere()};
+        return 0.5 *
+               ray_colour(Ray(record.point, target - record.point), world, bounces - 1);
     }
 
     auto t = 0.5 * (ray.Direction().y() + 1.);
@@ -23,9 +27,10 @@ Colour::Colour ray_color(const Ray &ray, const SimObject &world) {
 int main() {
     // Image
     const auto aspect_ratio = 16.0 / 9.0;
-    const int image_width{500};
+    const int image_width{1920};
     const int image_height{static_cast<int>(image_width / aspect_ratio)};
-    const unsigned int samples_per_pixel{100};
+    const unsigned int samples_per_pixel{20};
+    const unsigned int max_bounces {10};
 
     // World
     SimObjectList world;
@@ -44,12 +49,14 @@ int main() {
         for (int j = 0; j <= image_width - 1; ++j) {
             Colour::Colour pixel_colour{0, 0, 0};
             for (int sample = 0; sample < samples_per_pixel; ++sample) {
-                auto u = double(j) / (image_width - 1);
-                auto v = double(i) / (image_height - 1);
+                auto u = (double(j) + utility::GetRandom(-1., 1.)) /
+                         (image_width - 1);
+                auto v = (double(i) + utility::GetRandom(-1., 1.)) /
+                         (image_height - 1);
 
                 Ray r = camera.GetRay(u, v);
 
-                pixel_colour += ray_color(r, world);
+                pixel_colour += ray_colour(r, world, max_bounces);
             }
             Colour::Write(std::cout, pixel_colour, samples_per_pixel);
         }

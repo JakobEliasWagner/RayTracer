@@ -20,7 +20,7 @@ namespace utility {
     }
 
     template<typename t>
-    t GetRandom(t left, t right) {
+    inline t GetRandom(t left, t right) {
         std::random_device rd;
         std::mt19937 eng(rd());
         std::uniform_real_distribution <t> dist(left, right);
@@ -29,7 +29,7 @@ namespace utility {
     }
 
     template<typename t>
-    t GetRandom() {
+    inline t GetRandom() {
         std::random_device rd;
         std::mt19937 eng(rd());
         std::uniform_real_distribution<t> dist(-1., 1.);
