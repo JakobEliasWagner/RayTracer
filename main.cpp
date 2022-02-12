@@ -9,14 +9,16 @@
 #include "src/utility/utility.h"
 
 
-Colour::Colour ray_colour(const Ray &ray, const SimObject &world, const unsigned int &bounces) {
+Colour::Colour ray_colour(const Ray &ray, const SimObject &world,
+                          const unsigned int &bounces) {
     if (bounces <= 0) return Colour::Colour(0., 0., 0.);
 
     HitRecord record;
-    if (world.Hit(ray, 0, Constants::infinity, record)) {
-        Point3 target{record.point + record.normal + RandomVec3InSphere()};
-        return 0.5 *
-               ray_colour(Ray(record.point, target - record.point), world, bounces - 1);
+    if (world.Hit(ray, 0.001, Constants::infinity, record)) {
+        Point3 target{record.point + record.normal + RandomUnitVec3InSphere()};
+        return 0.5 * ray_colour(Ray(record.point, target - record.point),
+                                world,
+                                bounces - 1);
     }
 
     auto t = 0.5 * (ray.Direction().y() + 1.);
@@ -27,10 +29,10 @@ Colour::Colour ray_colour(const Ray &ray, const SimObject &world, const unsigned
 int main() {
     // Image
     const auto aspect_ratio = 16.0 / 9.0;
-    const int image_width{1920};
+    const int image_width{400};
     const int image_height{static_cast<int>(image_width / aspect_ratio)};
     const unsigned int samples_per_pixel{20};
-    const unsigned int max_bounces {10};
+    const unsigned int max_bounces{10};
 
     // World
     SimObjectList world;

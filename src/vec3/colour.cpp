@@ -12,9 +12,12 @@ void Colour::Write(std::ostream &out,
     auto g{pixel_colour.y()};
     auto b{pixel_colour.z()};
 
-    r /= samples_per_pixel;
-    g /= samples_per_pixel;
-    b /= samples_per_pixel;
+    // Gamma-correct gamma=2.0
+    auto scale = 1.0 / samples_per_pixel;
+
+    r = std::sqrt(r * scale);
+    g = std::sqrt(g * scale);
+    b = std::sqrt(b * scale);
 
     out << static_cast<int>(256 * utility::clamp(r, 0.0, 0.999)) << " "
         << static_cast<int>(256 * utility::clamp(g, 0.0, 0.999)) << " "

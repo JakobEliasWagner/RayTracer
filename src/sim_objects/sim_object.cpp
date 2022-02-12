@@ -6,5 +6,5 @@
 
 void HitRecord::SetFaceNormal(const Ray &ray, const Vec3 &outward_normal) {
     bool is_front_face = ray.Direction().dot(outward_normal) < 0;
-    normal = front_face ? outward_normal : -outward_normal;
+    normal = is_front_face ? outward_normal : -outward_normal;
 }
