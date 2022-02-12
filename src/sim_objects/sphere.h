@@ -9,9 +9,11 @@
 
 class Sphere : public SimObject {
 public:
-    Sphere() = default;
+    Sphere() = delete;
 
-    Sphere(Point3 center, const double &radius);
+    Sphere(Point3 center,
+           const double &radius,
+           std::shared_ptr<MaterialInterface>  material);
 
     bool Hit(const Ray &ray,
              const double &t_min,
@@ -21,6 +23,7 @@ public:
 private:
     double radius_;
     Point3 center_;
+    std::shared_ptr<MaterialInterface> material_;
 };
 
 

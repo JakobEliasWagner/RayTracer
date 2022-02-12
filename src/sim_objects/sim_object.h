@@ -9,14 +9,14 @@
 #include "../vec3/vec3.h"
 #include "../camera/ray.h"
 
-class Material;
+class MaterialInterface;
 
 struct HitRecord {
     Point3 point;
     Vec3 normal;
     double t;
     bool front_face;
-    std::shared_ptr<Material> material;
+    std::shared_ptr<MaterialInterface> material;
 
     void SetFaceNormal(const Ray &ray, const Vec3 &outward_normal);
 };

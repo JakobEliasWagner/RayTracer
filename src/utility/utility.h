@@ -42,6 +42,11 @@ namespace utility {
         if (x > max) return max;
         return x;
     }
+
+    inline bool CloseToZero(const Vec3 &vector){
+        const double epsilon{1e-8};
+        return (vector.norm() < epsilon);
+    }
 }
 
 

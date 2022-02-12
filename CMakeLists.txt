@@ -23,7 +23,7 @@ add_executable(RayTracer
         src/sim_objects/sim_object_list.cpp
         src/sim_objects/sim_object_list.h
         src/utility/constants.h
-        src/material/material.h)
+        src/material/material.h src/material/lambertian.cpp src/material/lambertian.h src/material/metal.cpp src/material/metal.h)
 
 target_link_libraries (RayTracer Eigen3::Eigen)
 target_link_libraries(RayTracer ${Boost_LIBRARIES})

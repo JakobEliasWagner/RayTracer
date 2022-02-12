@@ -6,12 +6,13 @@
 #define RAYTRACER_MATERIAL_H
 
 #include "../camera/ray.h"
+#include "../sim_objects/sim_object.h"
 
 struct HitRecord;
 
-class Material {
+class MaterialInterface {
 public:
-    virtual bool scatter(
+    virtual bool Scatter(
             const Ray &ray_in,
             Ray &ray_out,
             const HitRecord &hit_record,

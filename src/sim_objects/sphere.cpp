@@ -6,8 +6,12 @@
 
 #include <utility>
 
-Sphere::Sphere(Point3 center, const double &radius) :
-        center_(std::move(center)), radius_(radius) {
+Sphere::Sphere(Point3 center,
+               const double &radius,
+               std::shared_ptr<MaterialInterface> material)
+        : center_(std::move(center)),
+          radius_(radius),
+          material_(std::move(material)) {
 
 }
 
@@ -34,13 +38,9 @@ bool Sphere::Hit(const Ray &ray, const double &t_min, const double &t_max,
 
     if (root < t_min) {
         root = (-b + sqrt(discriminant)) / (2. * a);
-        if (root > t_max)
-        {
+        if (root > t_max || root < t_min) {
             return false;  // bigger root too big and smaller too small
-        } else if (root < t_min) {
-            return false;
         }
-
     }
 
     record.t = root;
@@ -48,6 +48,8 @@ bool Sphere::Hit(const Ray &ray, const double &t_min, const double &t_max,
 
     auto outward_normal = (record.point - center_) / radius_;
     record.SetFaceNormal(ray, outward_normal);
+
+    record.material = material_;
 
     return true;
 }
