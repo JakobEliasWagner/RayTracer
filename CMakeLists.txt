@@ -1,29 +1,27 @@
-cmake_minimum_required(VERSION 3.19)
-project(RayTracer)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+
+project(
+        sudoku
+        VERSION 0.0
+        DESCRIPTION "Sudoku solver and puzzle generator"
+        LANGUAGES CXX
+)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package (Eigen3 3.3 REQUIRED NO_MODULE)
-find_package (Boost)
+include(GNUInstallDirs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-add_executable(RayTracer
-        main.cpp
-        src/vec3/vec3.cpp
-        src/vec3/vec3.h
-        src/vec3/colour.cpp
-        src/vec3/colour.h
-        src/camera/ray.cpp
-        src/camera/ray.h
-        src/camera/camera.cpp
-        src/camera/camera.h
-        src/sim_objects/sim_object.cpp
-        src/sim_objects/sim_object.h
-        src/sim_objects/sphere.cpp
-        src/sim_objects/sphere.h
-        src/sim_objects/sim_object_list.cpp
-        src/sim_objects/sim_object_list.h
-        src/utility/constants.h
-        src/material/material.h src/material/lambertian.cpp src/material/lambertian.h src/material/metal.cpp src/material/metal.h)
+# define targets and sources
+include(src/CMakeLists.txt)
 
-target_link_libraries (RayTracer Eigen3::Eigen)
-target_link_libraries(RayTracer ${Boost_LIBRARIES})
+# define standalone executables
+include(standalone/CMakeLists.txt)
+
+
+enable_testing()
+add_subdirectory(test)
