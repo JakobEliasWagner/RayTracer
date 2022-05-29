@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(
-        sudoku
+        Raytracer
         VERSION 0.0
-        DESCRIPTION "Sudoku solver and puzzle generator"
+        DESCRIPTION "Raytracer"
         LANGUAGES CXX
 )
 
